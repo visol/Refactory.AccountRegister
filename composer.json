@@ -1,7 +1,7 @@
 {
     "name": "refactory/accountregister",
     "type": "typo3-flow-package",
-    "description": "Add description here",
+    "description": "Account registration utility",
     "require": {
         "typo3/flow": "*"
     },
