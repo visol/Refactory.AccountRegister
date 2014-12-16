@@ -39,7 +39,7 @@ class UserCommandController extends \TYPO3\Flow\Cli\CommandController {
 	protected $userFactory;
 
 	/**
-	 * @var \Refactory\Login\Service\AccountManagementService
+	 * @var \Refactory\AccountRegister\Service\AccountManagementService
 	 * @Flow\Inject
 	 */
 	protected $accountManagementService;
