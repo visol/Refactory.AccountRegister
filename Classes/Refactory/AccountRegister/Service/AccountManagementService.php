@@ -61,4 +61,13 @@ class AccountManagementService {
 		$this->accountRepository->update($account);
 		return TRUE;
 	}
+
+	/**
+	 * Method to find account by given party
+	 * @param string $accountIdentifier
+	 * @return \TYPO3\Flow\Security\Account
+	 */
+	public function getAccount($accountIdentifier) {
+		return $this->accountRepository->findOneByAccountIdentifier($accountIdentifier);
+	}
 }
