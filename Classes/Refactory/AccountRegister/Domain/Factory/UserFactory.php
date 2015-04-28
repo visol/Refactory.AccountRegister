@@ -27,6 +27,12 @@ class UserFactory {
 	protected $accountFactory;
 
 	/**
+	 * @var string
+	 * @Flow\Inject(setting="model", package="Refactory.Register")
+	 */
+	protected $model;
+
+	/**
 	 * Creates a User with the given information
 	 *
 	 * The User is not added to the repository, the caller has to add the
@@ -42,8 +48,9 @@ class UserFactory {
 	 * @return \TYPO3\Party\Domain\Model\Person
 	 */
 	public function create($username, $password, $firstName, $lastName, $email, array $roleIdentifiers = NULL) {
-		$user = new \TYPO3\Party\Domain\Model\Person();
+		$user = new $this->model;
 		$name = new \TYPO3\Party\Domain\Model\PersonName('', $firstName, '', $lastName, '', $username);
+
 		$user->setName($name);
 
 		$electronicAddress = new \TYPO3\Party\Domain\Model\ElectronicAddress();
