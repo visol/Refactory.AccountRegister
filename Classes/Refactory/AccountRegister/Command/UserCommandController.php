@@ -44,17 +44,21 @@ class UserCommandController extends \TYPO3\Flow\Cli\CommandController {
 	 */
 	protected $accountManagementService;
 
-	/**
-	 * Create a user
-	 *
-	 * @param string $username Username
-	 * @param string $password Password
-	 * @param string $email Email
-	 * @Flow\Validate(argumentName="email", type="\TYPO3\Flow\Validation\Validator\EmailAddressValidator")
-	 * @param string $roles A comma separated list of roles to assign
-	 * @return void
-	 */
-	public function createCommand($username, $password, $email, $roles = NULL) {
+    /**
+     * Create a user
+     *
+     * @param string $username Username
+     * @param string $firstName First name
+     * @param string $lastName Last name
+     * @param string $password Password
+     * @param string $email Email
+     * @Flow\Validate(argumentName="email", type="\TYPO3\Flow\Validation\Validator\EmailAddressValidator")
+     * @param string $roles A comma separated list of roles to assign
+     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @return void
+     */
+	public function createCommand($username, $firstName, $lastName, $password, $email, $roles = NULL) {
 		$account = $this->accountRepository->findByAccountIdentifierAndAuthenticationProviderName($username, 'DefaultProvider');
 		if ($account instanceof \TYPO3\Flow\Security\Account) {
 			$this->outputLine('The Username <b>"%s"</b> is already in use.', array($username));
@@ -73,7 +77,7 @@ class UserCommandController extends \TYPO3\Flow\Cli\CommandController {
 		}
 
 		try {
-			$user = $this->userFactory->create($username, $password, $firstName = 'John', $lastName = 'Doe', $email, $roleIdentifiers);
+			$user = $this->userFactory->create($username, $password, $firstName, $lastName, $email, $roleIdentifiers);
 			$this->partyRepository->add($user);
 			$accounts = $user->getAccounts();
 			foreach ($accounts as $account) {
